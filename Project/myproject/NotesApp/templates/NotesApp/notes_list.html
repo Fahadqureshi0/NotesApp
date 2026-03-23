@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Notes App{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!--Search method-->
+    <form method="get">
+    <input type="text" name="q" placeholder="Search Notes..." value="{{ query }}">
+    <button type="submit">Search</button>
+</form>
+    <h2>My Notes</h2>
+
+    <ul>
+        {% for note in notes %}
+            <li>
+                <h3>{{ note.title }}</h3>
+                <p>{{ note.content }}</p>
+                <p>Status: {{ note.is_completed }}</p>
+
+                <!-- Update -->
+                <a href="{% url 'update_notes' note.pk %}">Update</a>
+
+                <!-- Delete -->
+                <a href="{% url 'delete_notes' note.pk %}">Delete</a>
+            </li>
+        {% empty %}
+            <p>No notes available.</p>
+        {% endfor %}
+    </ul>
+
+    <br>
+
+    <!-- Add Note -->
+    <a href="{% url 'create_note' %}">Add New Note</a>
+
+    <footer>
+        <p>&copy; 2026 My Notes App</p>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
